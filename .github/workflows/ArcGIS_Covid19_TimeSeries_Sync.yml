@@ -15,4 +15,4 @@ jobs:
         python-version: '2.7'
     - name: Install dependencies
       run: |
-        python TimeSeriesDataDownload.py  ${{ secrets.CHDMA_ARCGIS_USERID }} ${{ secrets.CHDMA_ARCGIS_PASSWORD }}
+        python DataProcessing/Scripts/ArcGIS_Covid19_TimeSeries_DataSync.py  ${{ secrets.CHDMA_ARCGIS_USERID }} ${{ secrets.CHDMA_ARCGIS_PASSWORD }}
