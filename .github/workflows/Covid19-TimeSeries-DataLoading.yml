@@ -1,0 +1,16 @@
+name: Time-Series_Data_Download
+
+on: [push]
+jobs: 
+  run:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '2.7'
+    - name: Install dependencies
+      run: |
+        python TimeSeriesDataDownload.py  ${{ secrets.CHDMA_ARCGIS_USERID }} ${{ secrets.CHDMA_ARCGIS_PASSWORD }}
