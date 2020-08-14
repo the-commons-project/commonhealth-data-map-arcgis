@@ -18,13 +18,12 @@ country_list = {'Kenya': {'Code': 'KE', 'OID': 2},  'Rwanda': {'Code': 'RW', 'OI
                 'Tanzania': {'Code': 'TZ', 'OID': 6}, 'Uganda': {'Code': 'UG', 'OID': 1},
                 'Burundi': {'Code': 'BI', 'OID': 3}, 'South Sudan': {'Code': 'SS', 'OID': 5}}
 
-table_feature_server_url = 'https://services8.arcgis.com/jBR2I70Id8UqWlJI/arcgis/rest/services/PlaceFund/FeatureServer/1'
-eac_feature_server_url = 'https://services8.arcgis.com/jBR2I70Id8UqWlJI/arcgis/rest/services/PlaceFund/FeatureServer/0'
+table_feature_server_url = 'https://services8.arcgis.com/jBR2I70Id8UqWlJI/arcgis/rest/services/EAC_COVID_TimeSeries/FeatureServer/1'
+eac_feature_server_url = 'https://services8.arcgis.com/jBR2I70Id8UqWlJI/arcgis/rest/services/EAC_COVID_TimeSeries/FeatureServer/0'
 
 table_fields = ["Country_name", "Country_code",  "category", "entry_date", "Category_count"]
 epoch = datetime(1970, 1, 1)
 tokenURL = 'https://commongeo.maps.arcgis.com/sharing/rest/generateToken'
-print sys.argv
 username = sys.argv[1]
 password = sys.argv[2]
 referer = 'https://commongeo.maps.arcgis.com'
@@ -63,12 +62,16 @@ def writetoweblayer(url, featureset, token, operation=""):
         elif operation.lower() == "update":
             url = url + "/updateFeatures?token=" + token
         elif operation.lower() == "delete":
-            url = url + "/deleteFeatures?token=" + token
+            url = url + "/deleteFeatures?where=1=1&token=" + token
         else:
             raise Exception("Operation add/update not specified.")
         # prepare featureset to post
-        payload = urlencode({"features": jsondumps(featureset), "f": "json"})
-        result = urllib.urlopen(url=url, data=payload).read()
+        if operation.lower() == "delete":
+            payload = urlencode({"f": "json"})
+            result = urllib.urlopen(url=url, data=payload).read()
+        else:
+            payload = urlencode({"features": jsondumps(featureset), "f": "json"})
+            result = urllib.urlopen(url=url, data=payload).read()
         try:
             # check if json is returned
             result_json = jsonloads(result)
@@ -223,10 +226,33 @@ def data_processing(confirmed_cases_data, death_case_data, recovered_cases_data,
         # TODO: Make uncomment and next time run it from previous days.
         load_time_series_data(final_data, token)
 
+        
+def truncate_mobility_data(table_feature_server_url, auth_token):
+    # truncate or delete to mobility table
+    if not table_feature_server_url[-1:].isdigit():
+        raise Exception("LayerID missing in URL: {0}".format(table_feature_server_url))
+    url = table_feature_server_url + '/query?where=1=1&returnGeometry=false&returnIdsOnly=true&f=json&token=' + auth_token
+    response = urllib.urlopen(url).read()
+    oid_ouptut = jsonloads(response)
+    if "error" in oid_ouptut:
+        msg = oid_ouptut["error"]["message"]
+        details = str("\n".join(oid_ouptut["error"]["details"]))
+        print False, "{0}\n{1}".format(msg, details)
+    elif not oid_ouptut.get("objectIds"):
+        pass
+    else:
+        oid_list = oid_ouptut.get("objectIds")
+        feat_json = {'objectIds': oid_list, 'f': 'json'}
+        success, msg = writetoweblayer(url=table_feature_server_url, featureset=feat_json,
+                                       token=auth_token, operation="delete")
 
+    
 def main():
     token = get_token(tokenURL, username, password)
-    print token
+    
+    # truncate or delete previous records
+    truncate_mobility_data(table_feature_server_url, token)
+    
     success, previous_process_date = get_previous_data_processing_date(table_feature_server_url, token)
     if success:
         print "Previous data processing done on '{}'".format(previous_process_date)

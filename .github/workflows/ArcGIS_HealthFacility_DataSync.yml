@@ -1,0 +1,20 @@
+name: Health Facility Data Sync
+
+on:
+  schedule:
+    - cron: "0 0 1 * *"
+    # Executes @ 12 AM UTC on 1st day of every month
+jobs: 
+  run:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '2.7'
+    - name: Install dependencies
+      run: |
+        python DataProcessing/Scripts/ArcGIS_HealthFacility_DataSync.py  ${{ secrets.CHDMA_ARCGIS_USERID }} ${{ secrets.CHDMA_ARCGIS_PASSWORD }}
+        

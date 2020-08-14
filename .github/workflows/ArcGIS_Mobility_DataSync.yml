@@ -1,9 +1,9 @@
-name: Time-Series_Data_Download
+name: EAC Mobility Data Sync
 
 on:
   schedule:
-    - cron: "30 0 * * *"   
-    # Executes @ 12:30 AM UTC every day
+    - cron: "0 1 * * 1"
+    # Executes @ 1 AM UTC every Monday
 jobs: 
   run:
     runs-on: windows-latest
@@ -16,5 +16,4 @@ jobs:
         python-version: '2.7'
     - name: Install dependencies
       run: |
-        python DataProcessing/Scripts/ArcGIS_Covid19_TimeSeries_DataSync.py  ${{ secrets.CHDMA_ARCGIS_USERID }} ${{ secrets.CHDMA_ARCGIS_PASSWORD }}
- 
+        python DataProcessing/Scripts/ArcGIS_Mobility_DataSync.py  ${{ secrets.CHDMA_ARCGIS_USERID }} ${{ secrets.CHDMA_ARCGIS_PASSWORD }}
