@@ -1,4 +1,4 @@
-name: Health Facility Data Sync
+name: WHO Health Facility Data Sync for EAC
 
 on:
   schedule:

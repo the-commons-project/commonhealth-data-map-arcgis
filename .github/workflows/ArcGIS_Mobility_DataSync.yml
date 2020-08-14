@@ -1,4 +1,4 @@
-name: EAC Mobility Data Sync
+name: Google Mobility Data Sync for EAC
 
 on:
   schedule:

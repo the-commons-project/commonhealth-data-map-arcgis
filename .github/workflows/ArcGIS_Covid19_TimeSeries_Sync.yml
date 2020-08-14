@@ -1,4 +1,4 @@
-name: Time-Series_Data_Download
+name: JHU Covid19 Time Series Data Sync
 
 on:
   schedule:
