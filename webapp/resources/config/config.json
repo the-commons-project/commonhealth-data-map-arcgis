@@ -1,0 +1,76 @@
+{
+  "pages": {
+    "page_0": {
+      "id": "page_0",
+      "mode": "FIT_WINDOW",
+      "type": "NORMAL",
+      "layout": {
+        "LARGE": "layout_0"
+      },
+      "isDefault": true,
+      "isVisible": true,
+      "label": "Page 1"
+    }
+  },
+  "layouts": {
+    "layout_0": {
+      "type": "FIXED",
+      "content": {
+        "0": {
+          "type": "WIDGET",
+          "bbox": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0,
+            "width": "100.0000%",
+            "height": "100.0000%"
+          },
+          "widgetId": "widget_1",
+          "isPending": false,
+          "setting": {
+            "vCenter": false,
+            "hCenter": false
+          }
+        }
+      },
+      "order": [
+        "0"
+      ]
+    }
+  },
+  "exbVersion": "1.1.0",
+  "mainSizeMode": "LARGE",
+  "theme": "themes/default/",
+  "forBuilderAttributes": {
+    "lockLayout": false
+  },
+  "template": "blankfullscreen",
+  "attributes": {
+    "portalUrl": "https://cssl.maps.arcgis.com"
+  },
+  "widgets": {
+    "widget_1": {
+      "uri": "widgets/common/embed/",
+      "version": "1.1.0",
+      "label": "Embed 1",
+      "config": {
+        "embedType": "url",
+        "staticUrl": "https://commongeo.maps.arcgis.com/apps/opsdashboard/index.html#/2910d67ac45340688d3abbbd574b51fc"
+      },
+      "id": "widget_1"
+    }
+  },
+  "widgetsManifest": {},
+  "views": {},
+  "sections": {},
+  "dialogs": {},
+  "dataSources": {},
+  "messageConfigs": {},
+  "pageStructure": [
+    {
+      "page_0": []
+    }
+  ],
+  "timestamp": 1597465029720
+}
