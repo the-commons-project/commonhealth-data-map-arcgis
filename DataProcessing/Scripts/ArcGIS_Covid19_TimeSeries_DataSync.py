@@ -7,21 +7,20 @@ import urllib
 import urllib2
 import sys
 
-
 confirmed_csv_file = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
 death_csv_file = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
 recovered_csv_file = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
 # country_list = {'Kenya': 'KE',  'Rwanda': 'RW', 'Tanzania': 'TZ', 'Uganda': 'UG', 'Burundi': 'BI',
 #                 'South Sudan': 'SS'}
 
-country_list = {'Kenya': {'Code': 'KE', 'OID': 2},  'Rwanda': {'Code': 'RW', 'OID': 4},
+country_list = {'Kenya': {'Code': 'KE', 'OID': 2}, 'Rwanda': {'Code': 'RW', 'OID': 4},
                 'Tanzania': {'Code': 'TZ', 'OID': 6}, 'Uganda': {'Code': 'UG', 'OID': 1},
                 'Burundi': {'Code': 'BI', 'OID': 3}, 'South Sudan': {'Code': 'SS', 'OID': 5}}
 
 table_feature_server_url = 'https://services8.arcgis.com/jBR2I70Id8UqWlJI/arcgis/rest/services/EAC_COVID_TimeSeries/FeatureServer/1'
 eac_feature_server_url = 'https://services8.arcgis.com/jBR2I70Id8UqWlJI/arcgis/rest/services/EAC_COVID_TimeSeries/FeatureServer/0'
 
-table_fields = ["Country_name", "Country_code",  "category", "entry_date", "Category_count"]
+table_fields = ["Country_name", "Country_code", "category", "entry_date", "Category_count"]
 epoch = datetime(1970, 1, 1)
 tokenURL = 'https://commongeo.maps.arcgis.com/sharing/rest/generateToken'
 username = sys.argv[1]
@@ -47,7 +46,6 @@ def get_token(token_url, user_name, pass_word):
     else:
         print '{}: {}'.format(response.code, response.msg)
         return None
-
 
 
 def writetoweblayer(url, featureset, token, operation=""):
@@ -110,7 +108,7 @@ def load_time_series_data(ip_record, token):
         if key != 'Country/Region':
             confirm_new_record, death_new_record, recover_new_record, active_new_record = [], [], [], []
             date = key
-            epoch_time = float((datetime.strptime(date, "%m/%d/%y") - epoch).total_seconds())*1000
+            epoch_time = float((datetime.strptime(date, "%m/%d/%y") - epoch).total_seconds()) * 1000
             # count = value
             confirm_new_record = [country, country_code, 'Confirmed', epoch_time, value.get('Confirmed')]
             death_new_record = [country, country_code, 'Death', epoch_time, value.get('Death')]
@@ -131,7 +129,7 @@ def update_eac_country_data(latest_date, cases_data, country_name, token):
                                    "Country_name": country_name,
                                    "Country_code": country_list[country_name].get('Code'),
                                    "last_updated_date": epoch_time,
-                                   "confirmed":cases_data['Confirmed'],
+                                   "confirmed": cases_data['Confirmed'],
                                    "active": cases_data['Active'],
                                    "recovered": cases_data['Recovered'],
                                    "deceased": cases_data['Death']}}]
@@ -170,7 +168,8 @@ def get_covid_data(csv_file_url, previous_process_date):
         for key, value in processed_data.items():
             temp = {}
             for k, v in value.items():
-                if k != 'Country/Region' and datetime.strptime(k, "%m/%d/%y") > datetime.strptime(previous_process_date, "%m/%d/%y"):
+                if k != 'Country/Region' and datetime.strptime(k, "%m/%d/%y") > datetime.strptime(previous_process_date,
+                                                                                                  "%m/%d/%y"):
                     temp.update({k: v})
             data_dict.update({key: temp})
         return data_dict
@@ -213,8 +212,9 @@ def data_processing(confirmed_cases_data, death_case_data, recovered_cases_data,
                 temp_dict.update({'Confirmed': confirm_no})
                 temp_dict.update({'Death': death_no})
                 temp_dict.update({'Recovered': recovered_no})
-                active_no = confirm_no - (death_no + recovered_no)
-                # TODO : Make negative number as zero
+                active_case = confirm_no - (death_no + recovered_no)
+                active_no = active_case if active_case > 0 else 0
+                # Made negative number as zero
                 temp_dict.update({'Active': active_no})
                 final_data.update({key: temp_dict})
         # will give date list  from CSV data
@@ -226,7 +226,7 @@ def data_processing(confirmed_cases_data, death_case_data, recovered_cases_data,
         # TODO: Make uncomment and next time run it from previous days.
         load_time_series_data(final_data, token)
 
-        
+
 def truncate_mobility_data(table_feature_server_url, auth_token):
     # truncate or delete to mobility table
     if not table_feature_server_url[-1:].isdigit():
@@ -246,13 +246,13 @@ def truncate_mobility_data(table_feature_server_url, auth_token):
         success, msg = writetoweblayer(url=table_feature_server_url, featureset=feat_json,
                                        token=auth_token, operation="delete")
 
-    
+
 def main():
     token = get_token(tokenURL, username, password)
-    
+
     # truncate or delete previous records
     truncate_mobility_data(table_feature_server_url, token)
-    
+
     success, previous_process_date = get_previous_data_processing_date(table_feature_server_url, token)
     if success:
         print "Previous data processing done on '{}'".format(previous_process_date)
