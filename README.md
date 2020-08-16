@@ -17,6 +17,6 @@ DataProcessing folder contains scipts to sync data below mentioned data sources 
 
 Github workflows to run the DataProcessing scripts
 
-## .WebApp
+## webapp
 
 Wrapper for ArcGIS Dashboard application
