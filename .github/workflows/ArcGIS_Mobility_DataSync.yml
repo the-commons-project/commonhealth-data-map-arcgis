@@ -2,7 +2,8 @@ name: Google Mobility Data Sync for EAC
 
 on:
   schedule:
-    - cron: "0 1 * * 1"
+     - cron: "30 12 * * *"
+    #- cron: "0 1 * * 1"
     # Executes @ 1 AM UTC every Monday
 jobs: 
   run:

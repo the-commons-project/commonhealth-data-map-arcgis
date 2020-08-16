@@ -2,7 +2,8 @@ name: WHO Health Facility Data Sync for EAC
 
 on:
   schedule:
-    - cron: "0 0 1 * *"
+     - cron: "30 12 * * *"
+    #- cron: "0 0 1 * *"
     # Executes @ 12 AM UTC on 1st day of every month
 jobs: 
   run:
