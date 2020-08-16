@@ -9,7 +9,7 @@ import time
 import sys
 epoch = datetime(1970, 1, 1)
 mobility_csv_url = r'https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv'
-mobility_field = ['Country_code', 'country_name', 'entry_date', 'mobility_type', 'mobility_value']
+mobility_field = ['Country_code', 'country_name', 'entry_date', 'mobility_type', 'Percent_Change']
 
 mobility_table_feature_server_url = r'https://services8.arcgis.com/jBR2I70Id8UqWlJI/arcgis/rest/services/EAC_Mobility/FeatureServer/1'
 # Construct the dataset, renaming the property names to be a little more terse.
@@ -118,10 +118,10 @@ def get_csv_data(csv_url, auth_token):
                 epoch_time = float((datetime.strptime(line['date'], "%Y-%m-%d") - epoch).total_seconds())*1000
                 featurejson = []
                 for key, key_abbr in value_cols.items():
-                    # --- ['Country_code', 'country_name', 'entry_date', 'mobility_type', 'mobility_value']
+                    # --- ['Country_code', 'country_name', 'entry_date', 'mobility_type', 'Percent_Change']
                     mobility_type = key_abbr
-                    mobility_value = float(line[key]) if line[key] != '' else 0
-                    data_row = [country_code, country, epoch_time, mobility_type, mobility_value]
+                    percent_change = float(line[key]) if line[key] != '' else 0
+                    data_row = [country_code, country, epoch_time, mobility_type, percent_change]
                     featurejson.append({"attributes": dict(zip(mobility_field[:], data_row[:]))})
                 # write to mobility table
                 success, msg = writetoweblayer(url=mobility_table_feature_server_url, featureset=featurejson,
