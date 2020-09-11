@@ -5,16 +5,46 @@
       "mode": "FIT_WINDOW",
       "type": "NORMAL",
       "layout": {
-        "LARGE": "layout_0"
+        "LARGE": "layout_0",
+        "SMALL": "layout_1",
+        "MEDIUM": "layout_2"
       },
       "isDefault": true,
       "isVisible": true,
-      "label": "Page 1"
+      "label": "LandingPage"
     }
   },
   "layouts": {
     "layout_0": {
       "type": "FIXED",
+      "content": {
+        "1": {
+          "type": "WIDGET",
+          "bbox": {
+            "left": 0,
+            "right": "68.7500%",
+            "top": 0,
+            "bottom": "62.5000%",
+            "width": "100.00%",
+            "height": "100.00%"
+          },
+          "widgetId": "widget_1",
+          "setting": {
+            "vCenter": false,
+            "hCenter": false
+          },
+          "isPending": false
+        }
+      },
+      "order": [
+        "1"
+      ]
+    },
+    "layout_1": {
+      "type": "FIXED",
+      "order": [
+        "0"
+      ],
       "content": {
         "0": {
           "type": "WIDGET",
@@ -22,11 +52,50 @@
             "left": 0,
             "right": 0,
             "top": 0,
-            "bottom": 0,
+            "bottom": "58.3333%",
             "width": "100.0000%",
-            "height": "100.0000%"
+            "height": "100.00%"
+          },
+          "widgetId": "widget_2",
+          "isPending": false,
+          "setting": {
+            "vCenter": false,
+            "hCenter": false
+          }
+        }
+      }
+    },
+    "layout_2": {
+      "type": "FIXED",
+      "content": {
+        "0": {
+          "type": "WIDGET",
+          "bbox": {
+            "left": 0,
+            "right": "68.7500%",
+            "top": 0,
+            "bottom": "62.5000%",
+            "width": "100.00%",
+            "height": "100.00%"
           },
           "widgetId": "widget_1",
+          "setting": {
+            "vCenter": false,
+            "hCenter": false
+          },
+          "isPending": true
+        },
+        "1": {
+          "type": "WIDGET",
+          "bbox": {
+            "left": 0,
+            "right": "33.4829%",
+            "top": 0,
+            "bottom": "68.8161%",
+            "width": "100.00%",
+            "height": "100.00%"
+          },
+          "widgetId": "widget_2",
           "isPending": false,
           "setting": {
             "vCenter": false,
@@ -35,7 +104,8 @@
         }
       },
       "order": [
-        "0"
+        "0",
+        "1"
       ]
     }
   },
@@ -43,7 +113,17 @@
   "mainSizeMode": "LARGE",
   "theme": "themes/default/",
   "forBuilderAttributes": {
-    "lockLayout": false
+    "lockLayout": false,
+    "viewPortSize": {
+      "SMALL": {
+        "width": 360,
+        "height": 640
+      },
+      "MEDIUM": {
+        "width": 601,
+        "height": 962
+      }
+    }
   },
   "template": "blankfullscreen",
   "attributes": {
@@ -53,12 +133,22 @@
     "widget_1": {
       "uri": "widgets/common/embed/",
       "version": "1.1.0",
-      "label": "Embed 1",
+      "label": "Desktop_Embed",
       "config": {
         "embedType": "url",
         "staticUrl": "https://commongeo.maps.arcgis.com/apps/opsdashboard/index.html#/2910d67ac45340688d3abbbd574b51fc"
       },
       "id": "widget_1"
+    },
+    "widget_2": {
+      "uri": "widgets/common/embed/",
+      "version": "1.1.0",
+      "label": "Mobile_Embed",
+      "config": {
+        "embedType": "url",
+        "staticUrl": "https://commongeo.maps.arcgis.com/apps/opsdashboard/index.html#/be09801403224becb25058d639d5ea92"
+      },
+      "id": "widget_2"
     }
   },
   "widgetsManifest": {},
@@ -72,5 +162,5 @@
       "page_0": []
     }
   ],
-  "timestamp": 1597465029720
+  "timestamp": 1599633575368
 }

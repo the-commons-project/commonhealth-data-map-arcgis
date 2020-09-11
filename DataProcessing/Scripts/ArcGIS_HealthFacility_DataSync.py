@@ -10,7 +10,8 @@ import sys
 epoch = datetime(1970, 1, 1)
 
 #https://raw.githubusercontent.com/the-commons-project/commonhealth-data-map-arcgis/master/DataProcessing/Data/who-cds-gmp-2019-01-eng-facilities.csv
-health_facility_csv_url = r'https://raw.githubusercontent.com/the-commons-project/commonhealth-data-map/develop/data-processing/data/who-cds-gmp-2019-01-eng-facilities.csv'
+#https://raw.githubusercontent.com/the-commons-project/commonhealth-data-map/develop/data-processing/data/who-cds-gmp-2019-01-eng-facilities.csv
+health_facility_csv_url = r'https://covidcheck.eac.int/DataProcessing/Data/who-cds-gmp-2019-01-eng-facilities.csv'
 
 health_facility_field = ['Country', 'Admin1', 'Facility_name', 'Facility_type', 'Ownership', 'Lat', 'Long_', 'LL_source']
 
