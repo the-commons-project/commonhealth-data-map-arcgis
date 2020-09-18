@@ -25,7 +25,7 @@
 
 “.github/workflows” folder in the repository contains GitHub Action scripts
   ### ArcGIS_Covid19_TimeSeries_Sync.yml: 
-  Workflow setup to run ArcGIS_Covid19_TimeSeries_DataSync.py script every day (once a day) 12:30 AM UTC 
+  Workflow setup to run ArcGIS_Covid19_TimeSeries_DataSync.py script every day (once a day) 5:30 AM UTC 
   ### ArcGIS_HealthFacility_DataSync.yml:
   Workflow setup to run ArcGIS_HealthFacility_DataSync.py script every month (once a month) 12:00 AM UTC
   ### ArcGIS_Mobility_DataSync.yml:
