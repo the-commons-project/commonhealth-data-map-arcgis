@@ -1,6 +1,7 @@
 name: Google Mobility Data Sync for EAC
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 1 * * 1"
     # Executes @ 1 AM UTC every Monday
