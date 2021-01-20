@@ -1,6 +1,7 @@
 name: JHU Covid19 Time Series Data Sync
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "30 5 * * *"   
     # Executes @ 5:30 AM UTC every day
